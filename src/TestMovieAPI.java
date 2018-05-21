@@ -23,30 +23,28 @@ import java.util.Comparator;
 
 public class TestMovieAPI {
 
+	final Map<String, String> headers = new HashMap<String, String>();
+
 	public void testPost(String movieName, Map<String, String> movieData) {
 
-		given()
-		.contentType("application/json")
-		.body(movieData)
-		.when()
-		.post("https://splunk.mocklab.io/movies?q=batman")
-		.then();
+		given().contentType("application/json").body(movieData).when().post("https://splunk.mocklab.io/movies?q=batman")
+				.then();
 	}
 
 	@Test
 	public String testGet() throws URISyntaxException, ParseException {
 
-		Map<String, String> headers = new HashMap<String, String>();
 		headers.put("Accept", "application/json");
-
-		ResponseBody responseBody = given()
-				.headers(headers)
-				.when()
-				.get("https://splunk.mocklab.io/movies?q=batman")
+		ResponseBody responseBody = given().headers(headers).when().get("https://splunk.mocklab.io/movies?q=batman")
 				.body();
 		String body = responseBody.asString();
 		return body;
 
+	}
+
+	public void basicPingTest() {
+		headers.put("Accept", "application/json");
+		given().headers(headers).when().get("https://splunk.mocklab.io/movies?q=batman").then().statusCode(200);
 	}
 
 	public boolean checkOriginalTitle(String body) throws ParseException {
@@ -220,7 +218,7 @@ public class TestMovieAPI {
 		for (Object path : list) {
 			if (!path.toString().contains("https://www.dropbox.com/")) {
 				validPoster = false;
-				//System.out.println(path.toString());
+				// System.out.println(path.toString());
 			}
 		}
 

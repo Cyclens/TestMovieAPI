@@ -16,6 +16,9 @@ public class TestClass {
 		
 		test.testPost(movieName, movie);
 
+		// Perform test on the response status code
+		test.basicPingTest();
+		
 		// Perform the test based on the requirements and get the JSON body of the response
 		String body = test.testGet();
 
